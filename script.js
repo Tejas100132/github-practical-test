@@ -182,7 +182,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /* ----------------------------------------------------
-       6. CONSOLE LOG (FOR VIVA / ACADEMIC DEMONSTRATION)
+       6. DYNAMIC COPYRIGHT YEAR (FEATURE-FOOTER)
+       ---------------------------------------------------- */
+    const copyrightYearSpan = document.getElementById("copyright-year");
+    if (copyrightYearSpan) {
+        copyrightYearSpan.textContent = new Date().getFullYear();
+    }
+
+    /* ----------------------------------------------------
+       7. CONSOLE LOG (FOR VIVA / ACADEMIC DEMONSTRATION)
        ---------------------------------------------------- */
     console.log(
         "%c Tejas Kushwah Portfolio Loaded Successfully ",
