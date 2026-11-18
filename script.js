@@ -264,10 +264,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ----------------------------------------------------
-       8. DEVTOOLS LOGGING (PRACTICAL DEMONSTRATION)
+       8. DYNAMIC COPYRIGHT YEAR (FOOTER)
+       ---------------------------------------------------- */
+    const copyrightYearSpan = document.getElementById("copyright-year");
+    if (copyrightYearSpan) {
+        copyrightYearSpan.textContent = new Date().getFullYear();
+    }
+
+    /* ----------------------------------------------------
+       9. DEVTOOLS LOGGING (PRACTICAL DEMONSTRATION)
        ---------------------------------------------------- */
     console.log(
-        "%c Tejas Kushwah Portfolio - Navbar Branch Active ",
-        "background: #38bdf8; color: #070a12; font-weight: bold; padding: 4px 10px; border-radius: 4px;"
+        "%c Tejas Kushwah Portfolio - Production Build (Navbar & Footer Merged) ",
+        "background: #2563eb; color: #ffffff; font-weight: bold; padding: 4px 10px; border-radius: 4px;"
     );
 });
