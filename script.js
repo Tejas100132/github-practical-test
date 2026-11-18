@@ -2,21 +2,139 @@
    PORTFOLIO LOGIC (script.js)
    Author: Tejas Kushwah
    Technologies: Vanilla JavaScript (ES6)
-   Zero external libraries or frameworks
+   Feature: Responsive Navigation Bar & Core Interactions
    ======================================================== */
 
 // Execute as soon as the DOM content is ready
 document.addEventListener("DOMContentLoaded", () => {
 
     /* ----------------------------------------------------
-       1. THEME TOGGLE (DARK / LIGHT) WITH LOCALSTORAGE
-       Persists user choice and respects system defaults.
+       1. RESPONSIVE NAVBAR: MOBILE HAMBURGER MENU
+       Handles toggling, closing on navigation, and accessibility
+       ---------------------------------------------------- */
+    const navToggleBtn = document.getElementById("nav-toggle");
+    const navMenu = document.getElementById("nav-menu");
+    const navLinks = document.querySelectorAll(".nav-link");
+    const siteHeader = document.getElementById("site-header");
+
+    function toggleMobileMenu() {
+        if (!navToggleBtn || !navMenu) return;
+
+        const isOpen = navMenu.classList.contains("is-open");
+        if (isOpen) {
+            closeMobileMenu();
+        } else {
+            navMenu.classList.add("is-open");
+            navToggleBtn.classList.add("is-active");
+            navToggleBtn.setAttribute("aria-expanded", "true");
+        }
+    }
+
+    function closeMobileMenu() {
+        if (!navToggleBtn || !navMenu) return;
+        navMenu.classList.remove("is-open");
+        navToggleBtn.classList.remove("is-active");
+        navToggleBtn.setAttribute("aria-expanded", "false");
+    }
+
+    if (navToggleBtn) {
+        navToggleBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
+    }
+
+    // Automatically close menu when any nav link is clicked
+    navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            closeMobileMenu();
+        });
+    });
+
+    // Close menu when clicking outside of the header
+    document.addEventListener("click", (event) => {
+        if (siteHeader && !siteHeader.contains(event.target)) {
+            closeMobileMenu();
+        }
+    });
+
+    // Accessibility: Close menu when pressing Escape key
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMobileMenu();
+        }
+    });
+
+    /* ----------------------------------------------------
+       2. SCROLLSPY & HEADER SHADOW ON SCROLL
+       Highlights the active nav link and adds shadow on scroll
+       ---------------------------------------------------- */
+    const sections = document.querySelectorAll("section[id], .hero-section[id]");
+
+    function handleScrollEvents() {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        // Add subtle shadow to header when scrolled past 20px
+        if (siteHeader) {
+            if (scrollY > 20) {
+                siteHeader.classList.add("header-scrolled");
+            } else {
+                siteHeader.classList.remove("header-scrolled");
+            }
+        }
+
+        // Active Section ScrollSpy
+        let currentSectionId = "";
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop - 120; // Offset for sticky navbar
+            const sectionHeight = section.offsetHeight;
+
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute("id");
+            }
+        });
+
+        if (currentSectionId) {
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === `#${currentSectionId}`) {
+                    link.classList.add("active");
+                }
+            });
+        }
+    }
+
+    window.addEventListener("scroll", handleScrollEvents, { passive: true });
+
+    /* ----------------------------------------------------
+       3. SMOOTH SCROLLING FOR ALL ANCHORS
+       ---------------------------------------------------- */
+    const allInternalAnchors = document.querySelectorAll('a[href^="#"]');
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    allInternalAnchors.forEach((anchor) => {
+        anchor.addEventListener("click", function (event) {
+            const targetId = this.getAttribute("href");
+            if (targetId && targetId !== "#") {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    event.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: prefersReducedMotion ? "auto" : "smooth",
+                        block: "start"
+                    });
+                }
+            }
+        });
+    });
+
+    /* ----------------------------------------------------
+       4. THEME TOGGLE (DARK / LIGHT) WITH LOCALSTORAGE
        ---------------------------------------------------- */
     const themeToggleBtn = document.getElementById("theme-toggle");
     const themeIcon = document.getElementById("theme-icon");
     const themeLabel = document.getElementById("theme-label");
 
-    // Helper: Safely read from localStorage (handles private browsing / blocked storage)
     function getStoredTheme() {
         try {
             return localStorage.getItem("portfolio-theme");
@@ -26,7 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Helper: Safely save to localStorage
     function setStoredTheme(theme) {
         try {
             localStorage.setItem("portfolio-theme", theme);
@@ -35,7 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Update the button icon, text, and accessible aria-label based on the active theme
     function updateThemeToggleUI(activeTheme) {
         if (!themeToggleBtn) return;
 
@@ -52,20 +168,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Apply the theme to the root <html> tag
     function applyTheme(theme) {
         document.documentElement.setAttribute("data-theme", theme);
         updateThemeToggleUI(theme);
     }
 
-    // Initialize Theme: Check localStorage first, fallback to system preference, default to dark
     const storedTheme = getStoredTheme();
     const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initialTheme = storedTheme ? storedTheme : (systemPrefersDark ? "dark" : "dark"); // Dark theme as default aesthetic
+    const initialTheme = storedTheme ? storedTheme : (systemPrefersDark ? "dark" : "dark");
 
     applyTheme(initialTheme);
 
-    // Event Listener for Theme Toggle Button
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener("click", () => {
             const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
@@ -77,13 +190,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ----------------------------------------------------
-       2. BACK TO TOP BUTTON
-       Reveals when the user scrolls down, smooth-scrolls to top on click.
+       5. BACK TO TOP BUTTON
        ---------------------------------------------------- */
     const backToTopBtn = document.getElementById("back-to-top");
-    const scrollThreshold = 300; // Show after scrolling 300px
+    const scrollThreshold = 300;
 
-    function handleScroll() {
+    function handleBackToTopVisibility() {
         if (!backToTopBtn) return;
         const currentScrollY = window.scrollY || document.documentElement.scrollTop;
 
@@ -94,13 +206,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Passive listener for smooth scrolling performance
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleBackToTopVisibility, { passive: true });
 
     if (backToTopBtn) {
         backToTopBtn.addEventListener("click", () => {
-            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
             window.scrollTo({
                 top: 0,
                 behavior: prefersReducedMotion ? "auto" : "smooth"
@@ -109,14 +218,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ----------------------------------------------------
-       3. LIGHTWEIGHT SCROLL REVEAL ANIMATIONS
-       Uses IntersectionObserver with prefers-reduced-motion support.
+       6. SCROLL REVEAL ANIMATIONS
        ---------------------------------------------------- */
     const revealElements = document.querySelectorAll(".reveal-on-scroll");
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-        // Accessibility fallback: Immediately display all elements if user prefers reduced motion
         revealElements.forEach((el) => {
             el.classList.add("is-revealed");
         });
@@ -125,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("is-revealed");
-                    // Stop observing once revealed to save memory and CPU cycles
                     observer.unobserve(entry.target);
                 }
             });
@@ -140,8 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ----------------------------------------------------
-       4. DYNAMIC TIME-BASED GREETING
-       Presents greeting based on the current hour.
+       7. DYNAMIC TIME-BASED GREETING
        ---------------------------------------------------- */
     const greetingBadge = document.getElementById("greeting");
     if (greetingBadge) {
@@ -160,34 +264,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ----------------------------------------------------
-       5. SMOOTH SCROLL FOR HERO CTA BUTTONS
-       Handles in-page anchor links smoothly.
-       ---------------------------------------------------- */
-    const internalAnchors = document.querySelectorAll('a[href^="#"]');
-
-    internalAnchors.forEach((anchor) => {
-        anchor.addEventListener("click", function (event) {
-            const targetId = this.getAttribute("href");
-            if (targetId && targetId !== "#") {
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    event.preventDefault();
-                    targetElement.scrollIntoView({
-                        behavior: prefersReducedMotion ? "auto" : "smooth",
-                        block: "start"
-                    });
-                }
-            }
-        });
-    });
-
-    /* ----------------------------------------------------
-       6. CONSOLE LOG (FOR VIVA / ACADEMIC DEMONSTRATION)
+       8. DEVTOOLS LOGGING (PRACTICAL DEMONSTRATION)
        ---------------------------------------------------- */
     console.log(
-        "%c Tejas Kushwah Portfolio Loaded Successfully ",
-        "background: #6366f1; color: #ffffff; font-weight: bold; padding: 4px 10px; border-radius: 4px;"
+        "%c Tejas Kushwah Portfolio - Navbar Branch Active ",
+        "background: #38bdf8; color: #070a12; font-weight: bold; padding: 4px 10px; border-radius: 4px;"
     );
-    console.log("Active Theme:", document.documentElement.getAttribute("data-theme"));
-    console.log("Reduced Motion Active:", prefersReducedMotion);
 });

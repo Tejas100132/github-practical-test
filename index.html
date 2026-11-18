@@ -11,19 +11,50 @@
 <body>
 
     <!-- ========================================================
-         FLOATING THEME TOGGLE (STANDALONE CONTROL - NO NAVBAR)
-         Accessible button to switch between dark and light modes
+         RESPONSIVE NAVIGATION BAR (FEATURE BRANCH)
+         Sticky header with desktop navigation & mobile hamburger
          ======================================================== -->
-    <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Switch to light theme" title="Toggle theme">
-        <span class="theme-icon" id="theme-icon" aria-hidden="true">☀️</span>
-        <span class="theme-label" id="theme-label">Light Mode</span>
-    </button>
+    <header class="site-header" id="site-header">
+        <div class="container nav-container">
+            <!-- Brand Logo -->
+            <a href="#hero" class="nav-brand" aria-label="Tejas Kushwah Portfolio Home">
+                Tejas<span class="brand-accent">.dev</span>
+            </a>
+
+            <!-- Desktop & Mobile Navigation Links -->
+            <nav class="navbar" id="navbar" aria-label="Main Navigation">
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="#hero" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
+                    <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Navbar Actions: Theme Toggle & Mobile Hamburger -->
+            <div class="nav-actions">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Switch to light theme" title="Toggle theme">
+                    <span class="theme-icon" id="theme-icon" aria-hidden="true">☀️</span>
+                    <span class="theme-label" id="theme-label">Light Mode</span>
+                </button>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="nav-toggle" class="nav-toggle-btn" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
 
     <!-- ========================================================
-         HERO SECTION
+         HERO SECTION (HOME)
          Attractive introduction with subtle gradient glow
          ======================================================== -->
-    <header class="hero-section">
+    <section id="hero" class="hero-section">
         <div class="container hero-container">
             <!-- Dynamic greeting badge updated by JavaScript -->
             <div class="badge-wrapper">
@@ -66,7 +97,7 @@
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
     <!-- ========================================================
          MAIN CONTENT AREA
@@ -345,7 +376,7 @@
     </main>
 
     <!-- ========================================================
-         BACK TO TOP BUTTON (STANDALONE FLOATING CONTROL - NO FOOTER)
+         BACK TO TOP BUTTON
          Smoothly scrolls the user back to the top of the page
          ======================================================== -->
     <button id="back-to-top" class="back-to-top-btn" type="button" aria-label="Back to top" title="Scroll back to top">
@@ -354,7 +385,7 @@
         </svg>
     </button>
 
-    <!-- NOTE: Navigation bar and Footer will be added in separate Git branches later -->
+    <!-- NOTE: Footer is intentionally omitted for the feature-footer branch -->
 
     <!-- Relative link to JavaScript file -->
     <script src="script.js"></script>
