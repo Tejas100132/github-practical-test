@@ -1,0 +1,950 @@
+/* ========================================================
+   PORTFOLIO STYLESHEET (style.css)
+   Author: Tejas Kushwah
+   Design: Premium Dark & Light Themes with Blue/Purple Accents
+   Technologies: Modern CSS3 (Vanilla, Zero External Frameworks)
+   ======================================================== */
+
+/* --------------------------------------------------------
+   1. CSS VARIABLES (DESIGN TOKENS)
+   -------------------------------------------------------- */
+
+/* Default: Premium Dark Theme */
+:root, [data-theme="dark"] {
+    --bg-primary: #070a12;          /* Deepest midnight canvas */
+    --bg-secondary: #0d1322;        /* Secondary surface tone */
+    --bg-card: rgba(17, 24, 39, 0.75); /* Translucent dark slate card surface */
+    --bg-card-hover: rgba(23, 32, 54, 0.9);
+    
+    /* Blue & Purple Accents */
+    --accent-cyan: #38bdf8;         /* Bright cyan-blue */
+    --accent-blue: #3b82f6;         /* Royal electric blue */
+    --accent-indigo: #6366f1;       /* Deep indigo */
+    --accent-purple: #a855f7;       /* Electric violet/purple */
+    
+    /* Gradients */
+    --gradient-accent: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+    --gradient-btn-primary: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    --gradient-btn-hover: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
+
+    /* Typography Colors */
+    --text-primary: #f8fafc;        /* Crisp white for headings */
+    --text-secondary: #cbd5e1;      /* Light gray for readable body text */
+    --text-muted: #94a3b8;          /* Muted gray for captions & dates */
+    
+    /* Borders & Glow Effects */
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-accent: rgba(99, 102, 241, 0.35);
+    --border-focus: #38bdf8;
+    --card-glow: 0 10px 30px -10px rgba(99, 102, 241, 0.2);
+    --card-glow-hover: 0 16px 36px -8px rgba(56, 189, 248, 0.25);
+
+    /* Atmospheric Background Lighting */
+    --bg-radial-1: rgba(99, 102, 241, 0.18);
+    --bg-radial-2: rgba(56, 189, 248, 0.07);
+    --hero-bg-gradient: linear-gradient(180deg, rgba(13, 19, 34, 0.6) 0%, rgba(7, 10, 18, 0.95) 100%);
+
+    /* Fonts & Radii */
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+}
+
+/* Light Theme Overrides */
+[data-theme="light"] {
+    --bg-primary: #f8fafc;          /* Crisp soft light canvas */
+    --bg-secondary: #f1f5f9;        /* Light neutral surface */
+    --bg-card: rgba(255, 255, 255, 0.9); /* Solid translucent white card */
+    --bg-card-hover: #ffffff;
+    
+    /* Slightly deeper accents for WCAG contrast on light surfaces */
+    --accent-cyan: #0284c7;         /* Deep cyan */
+    --accent-blue: #2563eb;         /* Vibrant blue */
+    --accent-indigo: #4f46e5;       /* Saturated indigo */
+    --accent-purple: #9333ea;       /* Rich purple */
+    
+    --text-primary: #0f172a;        /* High-contrast slate black */
+    --text-secondary: #334155;      /* Slate charcoal for body */
+    --text-muted: #64748b;          /* Balanced mid-gray */
+    
+    --border-subtle: rgba(15, 23, 42, 0.08);
+    --border-accent: rgba(99, 102, 241, 0.45);
+    --border-focus: #2563eb;
+    --card-glow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+    --card-glow-hover: 0 12px 28px -4px rgba(99, 102, 241, 0.18);
+
+    --bg-radial-1: rgba(99, 102, 241, 0.08);
+    --bg-radial-2: rgba(56, 189, 248, 0.06);
+    --hero-bg-gradient: linear-gradient(180deg, rgba(238, 242, 255, 0.7) 0%, rgba(248, 250, 252, 0.95) 100%);
+}
+
+/* --------------------------------------------------------
+   2. GLOBAL RESET & BASE STYLES
+   -------------------------------------------------------- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    background-image: 
+        radial-gradient(ellipse 90% 50% at 50% -10%, var(--bg-radial-1), transparent 75%),
+        radial-gradient(ellipse 60% 40% at 80% 60%, var(--bg-radial-2), transparent 70%);
+    background-attachment: fixed;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-bottom: 5rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Accessible Focus Ring */
+:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* --------------------------------------------------------
+   3. FLOATING THEME TOGGLE BUTTON
+   -------------------------------------------------------- */
+.theme-toggle-btn {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.5rem;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25);
+}
+
+.theme-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+/* --------------------------------------------------------
+   4. FLOATING BACK TO TOP BUTTON
+   -------------------------------------------------------- */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 999;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--gradient-btn-primary);
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease, box-shadow 0.2s ease;
+}
+
+.back-to-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.back-to-top-btn:hover {
+    background: var(--gradient-btn-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+}
+
+.top-icon {
+    width: 22px;
+    height: 22px;
+}
+
+/* --------------------------------------------------------
+   5. SCROLL REVEAL ANIMATIONS
+   Lightweight, performant CSS transitions triggered by JS
+   -------------------------------------------------------- */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --------------------------------------------------------
+   6. LAYOUT CONTAINER
+   -------------------------------------------------------- */
+.container {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* --------------------------------------------------------
+   7. HERO SECTION
+   -------------------------------------------------------- */
+.hero-section {
+    position: relative;
+    padding: 6.5rem 0 4.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--hero-bg-gradient);
+    transition: background 0.3s ease;
+}
+
+.hero-container {
+    text-align: center;
+}
+
+.badge-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.greeting-badge {
+    display: inline-block;
+    padding: 0.45rem 1.15rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 999px;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.greeting-badge:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+/* Gradient Text for Name */
+.gradient-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--accent-blue);
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+}
+
+.hero-description {
+    max-width: 680px;
+    margin: 0 auto 2.25rem;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+}
+
+/* Hero Action Buttons */
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary {
+    background: var(--gradient-btn-primary);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:hover {
+    background: var(--gradient-btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--accent-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.btn-outline:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: var(--accent-cyan);
+    transform: translateY(-2px);
+}
+
+/* Quick Highlight Metrics */
+.hero-highlights {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.highlight-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    min-width: 180px;
+    transition: var(--transition-smooth);
+}
+
+.highlight-item:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+}
+
+.highlight-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.highlight-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.status-active {
+    color: #10b981; /* High-contrast green */
+}
+
+/* --------------------------------------------------------
+   8. SECTION HEADERS & SHARED CARDS
+   -------------------------------------------------------- */
+.section {
+    padding-top: 5rem;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+}
+
+.section-subtitle {
+    display: block;
+    font-size: 0.825rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 0.4rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.6rem;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--gradient-accent);
+    border-radius: 2px;
+}
+
+/* Reusable Glassmorphism Card Component */
+.card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--card-glow);
+    transition: var(--transition-smooth);
+}
+
+.card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-accent);
+    box-shadow: var(--card-glow-hover);
+    transform: translateY(-4px);
+}
+
+/* --------------------------------------------------------
+   9. ABOUT SECTION
+   -------------------------------------------------------- */
+.about-main-card .lead-text {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.about-main-card p {
+    margin-bottom: 1.25rem;
+    color: var(--text-secondary);
+}
+
+.about-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.mini-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: var(--bg-card);
+    padding: 1.15rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.mini-feature h4 {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.mini-feature p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* --------------------------------------------------------
+   10. EDUCATION SECTION
+   -------------------------------------------------------- */
+.education-card {
+    border-left: 4px solid var(--accent-indigo);
+}
+
+.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.education-degree {
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.education-major {
+    font-size: 1.05rem;
+    color: var(--accent-cyan);
+    font-weight: 500;
+}
+
+.edu-badge {
+    background: rgba(99, 102, 241, 0.15);
+    border: 1px solid rgba(99, 102, 241, 0.35);
+    color: var(--accent-indigo);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+}
+
+.education-meta {
+    margin-bottom: 1.5rem;
+}
+
+.university-name {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.university-name strong {
+    color: var(--text-primary);
+}
+
+.coursework-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+}
+
+.coursework-title {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.coursework-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.coursework-tags .tag {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    transition: var(--transition-smooth);
+}
+
+.coursework-tags .tag:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-indigo);
+}
+
+/* --------------------------------------------------------
+   11. SKILLS SECTION WITH SKILL CARDS
+   -------------------------------------------------------- */
+.skills-category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-group-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+}
+
+.group-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.skill-group-header h3 {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.skill-group-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+}
+
+.skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    transition: var(--transition-smooth);
+}
+
+.chip:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--accent-indigo);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------
+   12. PROJECTS SECTION WITH HONEST PLACEHOLDERS
+   -------------------------------------------------------- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.status-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+}
+
+.status-pill-active {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.status-pill-upcoming {
+    background: rgba(168, 85, 247, 0.15);
+    color: var(--accent-purple);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+.status-pill-planned {
+    background: rgba(148, 163, 184, 0.15);
+    color: var(--text-muted);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.project-year {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.project-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.project-tag {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--accent-cyan);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+}
+
+.project-footer {
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.placeholder-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* --------------------------------------------------------
+   13. CONTACT SECTION WITH SOCIAL CARDS
+   -------------------------------------------------------- */
+.contact-intro {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    max-width: 700px;
+}
+
+.contact-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.contact-link-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: var(--transition-smooth);
+}
+
+.contact-link-card:hover {
+    border-color: var(--accent-indigo);
+    box-shadow: 0 8px 24px -6px rgba(99, 102, 241, 0.3);
+    transform: translateY(-3px);
+}
+
+.contact-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: var(--radius-sm);
+    color: var(--accent-cyan);
+    flex-shrink: 0;
+    transition: var(--transition-smooth);
+}
+
+.contact-link-card:hover .contact-icon-box {
+    background: var(--accent-indigo);
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+}
+
+.contact-svg {
+    width: 22px;
+    height: 22px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.contact-channel {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.contact-handle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.external-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    transition: var(--transition-smooth);
+}
+
+.contact-link-card:hover .external-icon {
+    color: var(--accent-cyan);
+    transform: translate(2px, -2px);
+}
+
+/* --------------------------------------------------------
+   14. RESPONSIVE BREAKPOINTS (Mobile, Tablet, Desktop)
+   -------------------------------------------------------- */
+
+/* Tablets and small laptops (max-width: 900px) */
+@media (max-width: 900px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.15rem;
+    }
+
+    .section {
+        padding-top: 4rem;
+    }
+}
+
+/* Mobile Devices (max-width: 640px) */
+@media (max-width: 640px) {
+    .theme-toggle-btn {
+        top: 0.85rem;
+        right: 0.85rem;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .back-to-top-btn {
+        bottom: 1rem;
+        right: 1rem;
+        width: 42px;
+        height: 42px;
+    }
+
+    .hero-section {
+        padding: 5rem 0 3rem;
+    }
+
+    .hero-title {
+        font-size: 2.1rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.05rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .hero-highlights {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .highlight-item {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .card {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .education-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .about-highlights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-category-grid,
+    .projects-grid,
+    .contact-links-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --------------------------------------------------------
+   15. ACCESSIBILITY: REDUCED MOTION SUPPORT
+   -------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}

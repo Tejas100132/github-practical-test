@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal portfolio of Tejas Kushwah - B.Tech Computer Science and Engineering student at Ajeenkya DY Patil University.">
+    <title>Tejas Kushwah | Portfolio</title>
+    <!-- Relative link to stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ========================================================
+         FLOATING THEME TOGGLE (STANDALONE CONTROL - NO NAVBAR)
+         Accessible button to switch between dark and light modes
+         ======================================================== -->
+    <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Switch to light theme" title="Toggle theme">
+        <span class="theme-icon" id="theme-icon" aria-hidden="true">☀️</span>
+        <span class="theme-label" id="theme-label">Light Mode</span>
+    </button>
+
+    <!-- ========================================================
+         HERO SECTION
+         Attractive introduction with subtle gradient glow
+         ======================================================== -->
+    <header class="hero-section">
+        <div class="container hero-container">
+            <!-- Dynamic greeting badge updated by JavaScript -->
+            <div class="badge-wrapper">
+                <span class="greeting-badge" id="greeting">Welcome to my portfolio</span>
+            </div>
+
+            <h1 class="hero-title">
+                Hi, I'm <span class="gradient-text">Tejas Kushwah</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                B.Tech in Computer Science and Engineering &bull; Ajeenkya DY Patil University
+            </p>
+
+            <p class="hero-description">
+                Passionate about core computer science, software engineering, and modern web development.
+                Dedicated to solving complex problems, writing clean code, and building scalable software solutions.
+            </p>
+
+            <!-- Hero Action Buttons -->
+            <div class="hero-actions">
+                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="#skills" class="btn btn-secondary">Explore Skills</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
+
+            <!-- Quick Highlight Metrics -->
+            <div class="hero-highlights reveal-on-scroll">
+                <div class="highlight-item">
+                    <span class="highlight-label">Degree</span>
+                    <span class="highlight-value">B.Tech CSE</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="highlight-label">University</span>
+                    <span class="highlight-value">Ajeenkya DY Patil Univ</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="highlight-label">Status</span>
+                    <span class="highlight-value status-active">Open to Learning</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================
+         MAIN CONTENT AREA
+         Organized into semantic sections with scroll reveal
+         ======================================================== -->
+    <main class="container">
+
+        <!-- 1. ABOUT ME SECTION -->
+        <section id="about" class="section">
+            <div class="section-header reveal-on-scroll">
+                <span class="section-subtitle">Introduction</span>
+                <h2 class="section-title">About Me</h2>
+            </div>
+
+            <article class="card about-main-card reveal-on-scroll">
+                <p class="lead-text">
+                    I am a Computer Science undergraduate focused on foundational computing, software design principles, and modern technologies.
+                </p>
+                <p>
+                    My academic journey has provided me with strong analytical thinking, problem-solving habits, and hands-on experience in multiple programming languages including C, C++, Python, and Java. Alongside backend and algorithmic fundamentals, I enjoy creating intuitive, accessible, and responsive user interfaces using web technologies.
+                </p>
+                <div class="about-highlights-grid">
+                    <div class="mini-feature">
+                        <span class="feature-icon">💡</span>
+                        <div>
+                            <h4>Analytical Thinking</h4>
+                            <p>Strong grounding in algorithmic logic and object-oriented paradigms.</p>
+                        </div>
+                    </div>
+                    <div class="mini-feature">
+                        <span class="feature-icon">⚙️</span>
+                        <div>
+                            <h4>Full-Stack Curiosity</h4>
+                            <p>Eager to build robust systems spanning backends, databases, and frontends.</p>
+                        </div>
+                    </div>
+                    <div class="mini-feature">
+                        <span class="feature-icon">🚀</span>
+                        <div>
+                            <h4>Continuous Learner</h4>
+                            <p>Actively learning tools, version control workflows, and industry standards.</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- 2. EDUCATION SECTION -->
+        <section id="education" class="section">
+            <div class="section-header reveal-on-scroll">
+                <span class="section-subtitle">Academics</span>
+                <h2 class="section-title">Education</h2>
+            </div>
+
+            <article class="card education-card reveal-on-scroll">
+                <div class="education-header">
+                    <div>
+                        <h3 class="education-degree">Bachelor of Technology (B.Tech)</h3>
+                        <p class="education-major">Computer Science and Engineering</p>
+                    </div>
+                    <span class="edu-badge">Undergraduate</span>
+                </div>
+
+                <div class="education-meta">
+                    <p class="university-name">
+                        🏛️ <strong>Ajeenkya DY Patil University</strong>
+                    </p>
+                </div>
+
+                <div class="coursework-box">
+                    <h4 class="coursework-title">Key Core Subjects & Focus Areas:</h4>
+                    <div class="coursework-tags">
+                        <span class="tag">Data Structures & Algorithms</span>
+                        <span class="tag">Object-Oriented Programming (OOP)</span>
+                        <span class="tag">Database Management Systems (DBMS)</span>
+                        <span class="tag">Operating Systems</span>
+                        <span class="tag">Computer Networks</span>
+                        <span class="tag">Web Development</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- 3. SKILLS SECTION -->
+        <section id="skills" class="section">
+            <div class="section-header reveal-on-scroll">
+                <span class="section-subtitle">Technical Proficiency</span>
+                <h2 class="section-title">Skills & Technologies</h2>
+            </div>
+
+            <div class="skills-category-grid">
+                <!-- Programming Languages -->
+                <article class="card skill-group-card reveal-on-scroll">
+                    <div class="skill-group-header">
+                        <span class="group-icon">💻</span>
+                        <h3>Programming Languages</h3>
+                    </div>
+                    <p class="skill-group-desc">Core languages used for problem solving and software architecture.</p>
+                    <div class="skill-chips">
+                        <span class="chip">C</span>
+                        <span class="chip">C++</span>
+                        <span class="chip">Python</span>
+                        <span class="chip">Java</span>
+                        <span class="chip">JavaScript</span>
+                    </div>
+                </article>
+
+                <!-- Web Development -->
+                <article class="card skill-group-card reveal-on-scroll">
+                    <div class="skill-group-header">
+                        <span class="group-icon">🌐</span>
+                        <h3>Web Development</h3>
+                    </div>
+                    <p class="skill-group-desc">Building accessible, responsive, and performant web interfaces.</p>
+                    <div class="skill-chips">
+                        <span class="chip">HTML5</span>
+                        <span class="chip">CSS3</span>
+                        <span class="chip">Vanilla JavaScript</span>
+                        <span class="chip">Responsive UI</span>
+                    </div>
+                </article>
+
+                <!-- Databases & Cloud -->
+                <article class="card skill-group-card reveal-on-scroll">
+                    <div class="skill-group-header">
+                        <span class="group-icon">🗄️</span>
+                        <h3>Databases & Cloud</h3>
+                    </div>
+                    <p class="skill-group-desc">Relational databases and cloud database infrastructure.</p>
+                    <div class="skill-chips">
+                        <span class="chip">MySQL</span>
+                        <span class="chip">Firebase</span>
+                    </div>
+                </article>
+
+                <!-- Tools & Version Control -->
+                <article class="card skill-group-card reveal-on-scroll">
+                    <div class="skill-group-header">
+                        <span class="group-icon">🛠️</span>
+                        <h3>Tools & Version Control</h3>
+                    </div>
+                    <p class="skill-group-desc">Collaborative engineering tools and version control systems.</p>
+                    <div class="skill-chips">
+                        <span class="chip">Git</span>
+                        <span class="chip">GitHub</span>
+                        <span class="chip">VS Code</span>
+                        <span class="chip">Linux / Shell</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS SECTION -->
+        <section id="projects" class="section">
+            <div class="section-header reveal-on-scroll">
+                <span class="section-subtitle">Portfolio Showcase</span>
+                <h2 class="section-title">Projects</h2>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1: Portfolio (Current Project) -->
+                <article class="card project-card reveal-on-scroll">
+                    <div class="project-card-header">
+                        <span class="status-pill status-pill-active">Current Project</span>
+                        <span class="project-year">2026</span>
+                    </div>
+                    <h3 class="project-title">Personal Portfolio Website</h3>
+                    <p class="project-description">
+                        A lightweight, modern developer portfolio crafted using semantic HTML5, pure CSS3 variables, and vanilla JavaScript. Designed without heavy external frameworks for optimal speed and accessibility.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML5</span>
+                        <span class="project-tag">CSS3</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">Git</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="placeholder-note">Active repository & practical test artifact</span>
+                    </div>
+                </article>
+
+                <!-- Project 2: Placeholder -->
+                <article class="card project-card reveal-on-scroll">
+                    <div class="project-card-header">
+                        <span class="status-pill status-pill-upcoming">In Development</span>
+                        <span class="project-year">Upcoming</span>
+                    </div>
+                    <h3 class="project-title">Full-Stack Task & Note Manager</h3>
+                    <p class="project-description">
+                        An upcoming interactive productivity tool featuring user authentication, categorized task boards, and persistent cloud storage. Planned with real-time sync and clean UI feedback.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">Firebase</span>
+                        <span class="project-tag">CSS3</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="placeholder-note">Planned repository &bull; Architecture stage</span>
+                    </div>
+                </article>
+
+                <!-- Project 3: Placeholder -->
+                <article class="card project-card reveal-on-scroll">
+                    <div class="project-card-header">
+                        <span class="status-pill status-pill-planned">Future Concept</span>
+                        <span class="project-year">Upcoming</span>
+                    </div>
+                    <h3 class="project-title">DSA Visualizer & Problem Solver</h3>
+                    <p class="project-description">
+                        An educational visualizer designed to demonstrate sorting algorithms (QuickSort, MergeSort) and graph traversals (BFS, DFS) step-by-step with interactive animation controls.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">C++</span>
+                        <span class="project-tag">Data Structures</span>
+                    </div>
+                    <div class="project-footer">
+                        <span class="placeholder-note">Planned repository &bull; Research stage</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 5. CONTACT SECTION -->
+        <section id="contact" class="section">
+            <div class="section-header reveal-on-scroll">
+                <span class="section-subtitle">Get In Touch</span>
+                <h2 class="section-title">Connect With Me</h2>
+            </div>
+
+            <article class="card contact-main-card reveal-on-scroll">
+                <p class="contact-intro">
+                    I am actively seeking software engineering internships, collaborative development projects, and learning opportunities. Feel free to connect with me across my professional profiles!
+                </p>
+
+                <div class="contact-links-grid">
+                    <!-- GitHub Profile -->
+                    <a href="https://github.com/Tejas100132" target="_blank" rel="noopener noreferrer" class="contact-link-card">
+                        <div class="contact-icon-box">
+                            <svg class="contact-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-channel">GitHub</span>
+                            <span class="contact-handle">@Tejas100132</span>
+                        </div>
+                        <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+
+                    <!-- LinkedIn Profile -->
+                    <a href="https://www.linkedin.com/in/tejas-kushwah/" target="_blank" rel="noopener noreferrer" class="contact-link-card">
+                        <div class="contact-icon-box">
+                            <svg class="contact-svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25a1.64 1.64 0 0 0-1.66 1.64 1.64 1.64 0 0 0 1.66 1.64 1.63 1.63 0 0 0 1.64-1.64 1.63 1.63 0 0 0-1.64-1.64Z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-details">
+                            <span class="contact-channel">LinkedIn</span>
+                            <span class="contact-handle">tejas-kushwah</span>
+                        </div>
+                        <svg class="external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            </article>
+        </section>
+
+    </main>
+
+    <!-- ========================================================
+         BACK TO TOP BUTTON (STANDALONE FLOATING CONTROL - NO FOOTER)
+         Smoothly scrolls the user back to the top of the page
+         ======================================================== -->
+    <button id="back-to-top" class="back-to-top-btn" type="button" aria-label="Back to top" title="Scroll back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="top-icon" aria-hidden="true">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
+
+    <!-- NOTE: Navigation bar and Footer will be added in separate Git branches later -->
+
+    <!-- Relative link to JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
